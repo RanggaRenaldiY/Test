@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Untuk Kamu Tantekuyu🌹</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Playfair+Display:ital,wght@0,600;1,600&family=Great+Vibes&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --wine-black:#1a0510;
+    --wine-deep:#3d0a1f;
+    --rose-dark:#7a1230;
+    --rose-mid:#c41e47;
+    --rose-bright:#e6395f;
+    --blush:#f6c9c9;
+    --gold:#d4a86a;
+    --cream:#fbeee4;
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  html,body{
+    margin:0; padding:0; height:100%; width:100%;
+    background: radial-gradient(120% 90% at 50% 15%, var(--wine-deep) 0%, var(--wine-black) 65%, #0a0208 100%);
+    overflow:hidden;
+    font-family:'Cormorant Garamond', serif;
+    color:var(--cream);
+  }
+  #stage{
+    position:relative;
+    height:100vh; height:100dvh; width:100vw;
+    display:flex; align-items:center; justify-content:center;
+    flex-direction:column;
+    overflow:hidden;
+  }
+
+  /* ambient sparkles */
+  .spark{
+    position:absolute; border-radius:50%;
+    background: var(--gold);
+    opacity:.35;
+    filter:blur(.5px);
+    animation: twinkle 3.5s ease-in-out infinite;
+  }
+  @keyframes twinkle{
+    0%,100%{opacity:.15; transform:scale(1);}
+    50%{opacity:.6; transform:scale(1.4);}
+  }
+
+  /* --- intro hint --- */
+  #hint{
+    position:absolute; bottom:9%; left:0; right:0;
+    text-align:center;
+    font-family:'Playfair Display', serif;
+    font-style:italic;
+    font-weight:600;
+    font-size:clamp(15px,4vw,19px);
+    letter-spacing:.04em;
+    color:var(--blush);
+    opacity:.85;
+    animation: pulseHint 2.2s ease-in-out infinite;
+    transition:opacity .6s ease;
+    pointer-events:none;
+    text-shadow:0 0 18px rgba(230,57,95,.35);
+  }
+  @keyframes pulseHint{
+    0%,100%{opacity:.5; transform:translateY(0);}
+    50%{opacity:1; transform:translateY(-4px);}
+  }
+
+  /* --- rose --- */
+  #rose-wrap{
+    position:relative;
+    width:min(78vw, 360px);
+    height:min(78vw, 360px);
+    display:flex; align-items:center; justify-content:center;
+    cursor:pointer;
+    z-index:3;
+    filter: drop-shadow(0 0 40px rgba(196,30,71,.35));
+    transition: filter 1s ease;
+  }
+  #rose-wrap.bloomed{
+    filter: drop-shadow(0 0 65px rgba(230,57,95,.55));
+  }
+  #rose-wrap.bloomed:active{ transform:none; }
+  #rose-wrap:not(.bloomed):active{ transform:scale(.96); }
+
+  #glow-ring{
+    position:absolute; width:60%; height:60%; border-radius:50%;
+    background: radial-gradient(circle, rgba(230,57,95,.45) 0%, rgba(230,57,95,0) 70%);
+    animation: breathe 2.6s ease-in-out infinite;
+  }
+  @keyframes breathe{
+    0%,100%{ transform:scale(.85); opacity:.6; }
+    50%{ transform:scale(1.15); opacity:1; }
+  }
+
+  .stem{
+    position:absolute;
+    bottom:-14%;
+    left:50%;
+    width:7px; height:38%;
+    background:linear-gradient(180deg, #4c7a3a, #23400f 85%);
+    border-radius:4px;
+    transform:translateX(-50%);
+    transform-origin:top center;
+    z-index:1;
+    box-shadow:1px 0 3px rgba(0,0,0,.35);
+    animation: sway 4.5s ease-in-out infinite;
+  }
+  .thorn{
+    position:absolute; width:0; height:0;
+    border-left:4px solid transparent;
+    border-right:4px solid transparent;
+    border-bottom:7px solid #33591f;
+  }
+  .thorn.t1{ bottom:22%; left:-52%; transform:rotate(-115deg); }
+  .thorn.t2{ bottom:8%; left:120%; transform:rotate(115deg); }
+
+  @keyframes sway{
+    0%,100%{ transform:translateX(-50%) rotate(-2deg); }
+    50%{ transform:translateX(-50%) rotate(2deg); }
+  }
+
+  .leaf{
+    position:absolute; width:30px; height:18px;
+    background:linear-gradient(135deg,#4c7a3a,#1f3d16);
+    border-radius:0 100% 0 100%;
+    box-shadow:inset -3px -3px 6px rgba(0,0,0,.3);
+    animation: sway 4.5s ease-in-out infinite;
+  }
+  .leaf.l1{ bottom:8%; left:32%; transform:rotate(-35deg); animation-delay:.3s; }
+  .leaf.l2{ bottom:16%; right:28%; transform:rotate(35deg); animation-delay:.6s; }
+
+  .petal{
+    position:absolute;
+    left:50%; top:50%;
+    background: linear-gradient(155deg, var(--rose-bright) 0%, var(--rose-mid) 55%, var(--rose-dark) 100%);
+    box-shadow: inset -6px -8px 16px rgba(58,4,20,.55), inset 4px 6px 10px rgba(255,190,205,.3);
+    transform-origin: 50% 96%;
+    transition: transform 1.4s cubic-bezier(.22,.9,.32,1), border-radius 1.4s ease, opacity .5s ease;
+  }
+
+  /* ===== CORE: tight swirled center, barely opens ===== */
+  .petal.core{
+    width:30%; height:42%;
+    border-radius: 100% 6% 100% 6%;
+    z-index:6;
+    transform: translate(-50%,-78%) rotate(var(--closed-rot)) scale(.75);
+  }
+  #rose-wrap.bloomed .petal.core{
+    border-radius: 90% 20% 90% 20%;
+    transform: translate(-50%,-70%) rotate(var(--open-rot)) scale(.8);
+  }
+
+  /* ===== INNER ring ===== */
+  .petal.inner{
+    width:42%; height:58%;
+    border-radius: 100% 8% 90% 8%;
+    z-index:4;
+    transform: translate(-50%,-84%) rotate(var(--closed-rot)) scale(.5);
+    opacity:1;
+  }
+  #rose-wrap.bloomed .petal.inner{
+    border-radius: 62% 38% 68% 32% / 78% 62% 38% 22%;
+    transform: translate(-50%,-60%) rotate(var(--open-rot)) scale(1);
+  }
+
+  /* ===== OUTER ring: widest, most curled-back tips ===== */
+  .petal.outer{
+    width:48%; height:66%;
+    border-radius: 100% 10% 85% 10%;
+    z-index:2;
+    opacity:0;
+    transform: translate(-50%,-88%) rotate(var(--closed-rot)) scale(.2);
+  }
+  #rose-wrap.bloomed .petal.outer{
+    opacity:1;
+    border-radius: 50% 50% 65% 35% / 85% 75% 25% 15%;
+    transform: translate(-50%,-44%) rotate(var(--open-rot)) scale(1.12);
+  }
+
+  /* --- message card --- */
+  #message{
+    position:absolute;
+    inset:0;
+    display:flex; align-items:center; justify-content:center;
+    z-index:5;
+    opacity:0; pointer-events:none;
+    transition:opacity 1s ease;
+    padding:8vw;
+  }
+  #message.show{ opacity:1; pointer-events:auto; }
+
+  .card{
+    max-width:420px;
+    text-align:center;
+  }
+  .eyebrow{
+    font-family:'Playfair Display', serif;
+    font-style:italic;
+    font-size:clamp(13px,3.6vw,15px);
+    letter-spacing:.25em;
+    text-transform:uppercase;
+    color:var(--gold);
+    margin:0 0 14px;
+    opacity:0;
+    transform:translateY(10px);
+    transition:opacity .8s ease, transform .8s ease;
+  }
+  #message.show .eyebrow{ opacity:1; transform:translateY(0); transition-delay:.2s; }
+
+  .headline{
+    font-family:'Great Vibes', cursive;
+    font-size:clamp(40px,12vw,58px);
+    color:var(--blush);
+    margin:0 0 18px;
+    line-height:1.1;
+    text-shadow:0 0 22px rgba(230,57,95,.4);
+    opacity:0;
+    transform:translateY(14px);
+    transition:opacity .9s ease, transform .9s ease;
+  }
+  #message.show .headline{ opacity:1; transform:translateY(0); transition-delay:.4s; }
+
+  .body-text{
+    font-size:clamp(17px,4.6vw,20px);
+    line-height:1.65;
+    font-weight:500;
+    color:var(--cream);
+    margin:0 0 30px;
+    opacity:0;
+    transform:translateY(14px);
+    transition:opacity .9s ease, transform .9s ease;
+  }
+  #message.show .body-text{ opacity:1; transform:translateY(0); transition-delay:.65s; }
+  .body-text b{ color:var(--rose-bright); font-weight:600; }
+
+  #love-btn{
+    font-family:'Playfair Display', serif;
+    font-weight:600;
+    font-style:italic;
+    font-size:clamp(15px,4vw,17px);
+    letter-spacing:.03em;
+    color:var(--wine-black);
+    background:linear-gradient(135deg, var(--blush), var(--gold));
+    border:none;
+    padding:14px 34px;
+    border-radius:999px;
+    cursor:pointer;
+    box-shadow:0 8px 24px rgba(212,168,106,.35);
+    opacity:0;
+    transform:translateY(14px) scale(.96);
+    transition:opacity .9s ease, transform .9s ease, box-shadow .3s ease;
+  }
+  #message.show #love-btn{ opacity:1; transform:translateY(0) scale(1); transition-delay:.9s; }
+  #love-btn:active{ transform:scale(.94); box-shadow:0 4px 14px rgba(212,168,106,.35); }
+
+  /* --- floating hearts --- */
+  .heart{
+    position:fixed;
+    bottom:-40px;
+    font-size:22px;
+    z-index:20;
+    pointer-events:none;
+    animation-name: floatUp;
+    animation-timing-function: ease-in;
+    animation-fill-mode: forwards;
+    filter:drop-shadow(0 0 6px rgba(230,57,95,.5));
+  }
+  @keyframes floatUp{
+    0%{ transform:translateY(0) translateX(0) rotate(0deg); opacity:0; }
+    10%{ opacity:1; }
+    100%{ transform:translateY(-110vh) translateX(var(--drift)) rotate(var(--spin)); opacity:0; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration:.01ms !important; transition-duration:.01ms !important; }
+  }
+</style>
+</head>
+<body>
+
+<div id="stage">
+  <div id="rose-wrap">
+    <div id="glow-ring"></div>
+    <div class="stem">
+      <div class="thorn t1"></div>
+      <div class="thorn t2"></div>
+    </div>
+    <div class="leaf l1"></div>
+    <div class="leaf l2"></div>
+
+    <!-- outer ring: 10 petals, widest bloom, most delay (opens last) -->
+    <div class="petal outer" style="--closed-rot:-6deg; --open-rot:-98deg; transition-delay:.32s;"></div>
+    <div class="petal outer" style="--closed-rot:30deg; --open-rot:-68deg; transition-delay:.36s;"></div>
+    <div class="petal outer" style="--closed-rot:66deg; --open-rot:-38deg; transition-delay:.40s;"></div>
+    <div class="petal outer" style="--closed-rot:102deg; --open-rot:-6deg; transition-delay:.44s;"></div>
+    <div class="petal outer" style="--closed-rot:138deg; --open-rot:26deg; transition-delay:.48s;"></div>
+    <div class="petal outer" style="--closed-rot:174deg; --open-rot:58deg; transition-delay:.52s;"></div>
+    <div class="petal outer" style="--closed-rot:210deg; --open-rot:90deg; transition-delay:.56s;"></div>
+    <div class="petal outer" style="--closed-rot:246deg; --open-rot:122deg; transition-delay:.60s;"></div>
+    <div class="petal outer" style="--closed-rot:282deg; --open-rot:154deg; transition-delay:.64s;"></div>
+    <div class="petal outer" style="--closed-rot:318deg; --open-rot:186deg; transition-delay:.68s;"></div>
+
+    <!-- inner ring: 6 petals, opens in the middle of the sequence -->
+    <div class="petal inner" style="--closed-rot:10deg; --open-rot:-42deg; transition-delay:.14s;"></div>
+    <div class="petal inner" style="--closed-rot:70deg; --open-rot:10deg; transition-delay:.18s;"></div>
+    <div class="petal inner" style="--closed-rot:130deg; --open-rot:62deg; transition-delay:.22s;"></div>
+    <div class="petal inner" style="--closed-rot:190deg; --open-rot:114deg; transition-delay:.26s;"></div>
+    <div class="petal inner" style="--closed-rot:250deg; --open-rot:166deg; transition-delay:.30s;"></div>
+    <div class="petal inner" style="--closed-rot:310deg; --open-rot:218deg; transition-delay:.34s;"></div>
+
+    <!-- core: 4 tightly swirled petals, opens first, stays cupped -->
+    <div class="petal core" style="--closed-rot:15deg; --open-rot:-20deg; transition-delay:0s;"></div>
+    <div class="petal core" style="--closed-rot:105deg; --open-rot:70deg; transition-delay:.03s;"></div>
+    <div class="petal core" style="--closed-rot:195deg; --open-rot:160deg; transition-delay:.06s;"></div>
+    <div class="petal core" style="--closed-rot:285deg; --open-rot:250deg; transition-delay:.09s;"></div>
+  </div>
+
+  <p id="hint">klik mawarnya, sayang 🌹</p>
+
+  <div id="message">
+    <div class="card">
+      <p class="eyebrow">Happy Girlfriend Day Sayang</p>
+      <h1 class="headline">Untuk Kamu Kesayangan Aku</h1>
+      <p class="body-text">
+        Sayang Terima kasih kamu sudah selalu ada buat aku, terima kasih juga atas perhatian, cinta,
+        dan kasih sayang tulus yang kamu berikan. Kamu selalu berhasil membuat hari terasa istimewa. 
+        Semoga aku selalu bisa jadi alasan kamu tersenyum selamanya. 
+        Aku sayang kamu. 💕
+      </p>
+      <button id="love-btn">Coba kali aku 🤍</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const roseWrap = document.getElementById('rose-wrap');
+  const hint = document.getElementById('hint');
+  const message = document.getElementById('message');
+  const loveBtn = document.getElementById('love-btn');
+  const stage = document.getElementById('stage');
+
+  // ambient sparkles
+  for(let i=0;i<16;i++){
+    const s = document.createElement('div');
+    s.className='spark';
+    const size = 2 + Math.random()*3;
+    s.style.width = size+'px';
+    s.style.height = size+'px';
+    s.style.left = Math.random()*100+'%';
+    s.style.top = Math.random()*100+'%';
+    s.style.animationDelay = (Math.random()*3)+'s';
+    s.style.animationDuration = (2.5+Math.random()*2.5)+'s';
+    stage.appendChild(s);
+  }
+
+  let bloomed = false;
+  roseWrap.addEventListener('click', () => {
+    if(bloomed) return;
+    bloomed = true;
+    roseWrap.classList.add('bloomed');
+    hint.style.opacity = '0';
+    setTimeout(()=>{ hint.style.display='none'; }, 700);
+    setTimeout(()=>{
+      message.classList.add('show');
+    }, 1300);
+  });
+
+  const heartEmojis = ['💖','💕','💗','❤️','🌹','💘'];
+  function burstHearts(){
+    const count = 40;
+    for(let i=0;i<count;i++){
+      setTimeout(()=>{
+        const h = document.createElement('span');
+        h.className='heart';
+        h.textContent = heartEmojis[Math.floor(Math.random()*heartEmojis.length)];
+        const startX = Math.random()*100;
+        h.style.left = startX+'vw';
+        h.style.fontSize = (16+Math.random()*22)+'px';
+        h.style.setProperty('--drift', (Math.random()*140-70)+'px');
+        h.style.setProperty('--spin', (Math.random()*80-40)+'deg');
+        const dur = 3 + Math.random()*2.5;
+        h.style.animationDuration = dur+'s';
+        document.body.appendChild(h);
+        setTimeout(()=>h.remove(), dur*1000+200);
+      }, i*45);
+    }
+  }
+
+  loveBtn.addEventListener('click', burstHearts);
+</script>
+
+</body>
+</html>
